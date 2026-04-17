@@ -1,0 +1,14 @@
+[
+  { "id": 1, "name": "David Kim", "lastSeen": "62d ago", "category": ["WORK"], "status": "Almost Due", "type": "almost-due", "image": "https://i.pravatar.cc/150?u=1" },
+  { "id": 2, "name": "Emma Wilson", "lastSeen": "62d ago", "category": ["FAMILY"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=2" },
+  { "id": 3, "name": "Lisa Nakamura", "lastSeen": "62d ago", "category": ["WORK"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=3" },
+  { "id": 4, "name": "James Wright", "lastSeen": "62d ago", "category": ["HOBBY", "TRAVEL"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=4" },
+  { "id": 5, "name": "David Kim", "lastSeen": "62d ago", "category": ["WORK"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=5" },
+  { "id": 6, "name": "Emma Wilson", "lastSeen": "62d ago", "category": ["FAMILY"], "status": "On-Track", "type": "on-track", "image": "https://i.pravatar.cc/150?u=6" },
+  { "id": 7, "name": "Lisa Nakamura", "lastSeen": "62d ago", "category": ["WORK"], "status": "On-Track", "type": "on-track", "image": "https://i.pravatar.cc/150?u=7" },
+  { "id": 8, "name": "James Wright", "lastSeen": "62d ago", "category": ["HOBBY", "TRAVEL"], "status": "Almost Due", "type": "almost-due", "image": "https://i.pravatar.cc/150?u=8" },
+  { "id": 9, "name": "David Kim", "lastSeen": "62d ago", "category": ["WORK"], "status": "Almost Due", "type": "almost-due", "image": "https://i.pravatar.cc/150?u=9" },
+  { "id": 10, "name": "Emma Wilson", "lastSeen": "62d ago", "category": ["FAMILY"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=10" },
+  { "id": 11, "name": "Lisa Nakamura", "lastSeen": "62d ago", "category": ["WORK"], "status": "Overdue", "type": "overdue", "image": "https://i.pravatar.cc/150?u=11" },
+  { "id": 12, "name": "James Wright", "lastSeen": "62d ago", "category": ["HOBBY", "TRAVEL"], "status": "On-Track", "type": "on-track", "image": "https://i.pravatar.cc/150?u=12" }
+]
