@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import friendsDataRaw from './friends.json'; // আপনার JSON ফাইলের পাথ ঠিক আছে কিনা দেখে নিন
+import { useFilter } from '../../context/filterContext'; // আপনার পাথ অনুযায়ী ঠিক করে নিন
 
 const Hompage = () => {
     const [friends, setFriends] = useState([]);
+    const { filter } = useFilter(); // কনটেক্সট থেকে ফিল্টার স্টেট নেওয়া হলো
 
     useEffect(() => {
         // JSON ডাটা স্টেটে সেট করা হচ্ছে
         setFriends(friendsDataRaw);
     }, []);
+
+    // ফিল্টারিং লজিক
+    const filteredFriends = friends.filter(friend => {
+        if (filter === 'all') return true; 
+        return friend.type === filter; 
+    });
 
     // ডাইনামিক স্ট্যাটাস কাউন্ট
     const stats = [
@@ -18,7 +26,7 @@ const Hompage = () => {
         { label: "Interactions This Month", count: 12 }, 
     ];
 
-    // স্ট্যাটাস অনুযায়ী ডাইনামিক কালার ফাংশন
+    // স্ট্যাটাস অনুযায়ী ডাইনামিক কালার ফাংশন
     const getStatusStyles = (type) => {
         switch (type) {
             case 'overdue': return 'bg-red-500 text-white';
@@ -62,7 +70,8 @@ const Hompage = () => {
                     </div>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {friends.map((friend) => (
+                        {/* মডিফাইড অংশ: filteredFriends.map ব্যবহার করা হয়েছে */}
+                        {filteredFriends.map((friend) => (
                             <Link to={`/details/${friend.id}`} key={friend.id} className="block">
                                 <div className="bg-white rounded-2xl border border-slate-100 p-8 flex flex-col items-center shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer h-full">
                                     
@@ -97,6 +106,13 @@ const Hompage = () => {
                             </Link>
                         ))}
                     </div>
+
+                    {/* যদি কোনো ফ্রেন্ড খুঁজে না পাওয়া যায় */}
+                    {filteredFriends.length === 0 && (
+                        <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-slate-200">
+                            <p className="text-slate-400 font-medium">No friends found in this category.</p>
+                        </div>
+                    )}
                 </section>
                 
             </div>
