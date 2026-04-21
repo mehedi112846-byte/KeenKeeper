@@ -1,15 +1,17 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import friendsData from '../hompage/friends.json'; // আপনার JSON ফাইলের পাথ অনুযায়ী ঠিক করে নিন
+import { useParams } from 'react-router-dom';
+import friendsData from '../hompage/friends.json'; 
 import { HiOutlineBellSnooze } from "react-icons/hi2";
 import { BiArchiveIn } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiPhone, FiMessageSquare, FiVideo } from "react-icons/fi";
 import { toast } from 'react-toastify';
+import { useTimeline } from '../../Timeline/timelineContext';
 
 const Details = () => {
-    const { id } = useParams(); // URL থেকে ID সংগ্রহ করবে
-    const friend = friendsData.find(f => f.id === parseInt(id)); // ID অনুযায়ী ফ্রেন্ড খুঁজবে
+    const { id } = useParams(); 
+    const { addActivity } = useTimeline(); // Context থেকে ফাংশনটি আনা হলো
+    const friend = friendsData.find(f => f.id === parseInt(id)); 
 
     if (!friend) {
         return <div className="text-center py-20 text-2xl font-bold">Friend not found!</div>;
@@ -24,13 +26,18 @@ const Details = () => {
         }
     };
 
-    const handleCall = (friendName) => {
-    toast.success(`Calling to ${friendName}`, {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "colored",
-    });
-};
+    // সব ধরনের অ্যাকশন (Call, Text, Video) হ্যান্ডেল করার ফাংশন
+    const handleAction = (type, friendName) => {
+        // টাইমলাইনে ডাটা অ্যাড করবে
+        addActivity(type, friendName);
+        
+        // টোস্ট মেসেজ দেখাবে
+        toast.success(`${type} with ${friendName} logged!`, {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "colored",
+        });
+    };
 
     return (
         <div className="min-h-screen bg-[#F9FBFC] py-12 px-6">
@@ -58,10 +65,9 @@ const Details = () => {
                         <p className="mt-6 text-slate-500 italic text-sm">
                             "Former colleague, great mentor"
                         </p>
-                        <p className="text-slate-400 text-[10px] mt-2 font-medium">Preferred: email</p>
+                        <p className="text-slate-400 text-[10px] mt-2 font-medium">Preferred email: {friend.email}</p>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="space-y-2">
                         <button className="w-full py-3 bg-white border border-slate-100 rounded-lg flex items-center justify-center gap-2 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all">
                             <HiOutlineBellSnooze size={18} /> Snooze 2 Weeks
@@ -77,46 +83,55 @@ const Details = () => {
 
                 {/* --- Right Stats Section --- */}
                 <div className="md:col-span-8 space-y-6">
-                    {/* Stats Boxes */}
                     <div className="grid grid-cols-3 gap-4">
                         <div className="bg-white p-6 rounded-xl border border-slate-100 text-center shadow-sm">
-                            <h3 className="text-3xl font-bold text-slate-800">62</h3>
+                            <h3 className="text-3xl font-bold text-slate-800">{friend.lastSeen}</h3>
                             <p className="text-slate-400 text-[10px] font-bold uppercase mt-1">Days Since Contact</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl border border-slate-100 text-center shadow-sm">
-                            <h3 className="text-3xl font-bold text-slate-800">30</h3>
+                            <h3 className="text-3xl font-bold text-slate-800">{friend.goalDays}</h3>
                             <p className="text-slate-400 text-[10px] font-bold uppercase mt-1">Goal (Days)</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl border border-slate-100 text-center shadow-sm">
-                            <h3 className="text-xl font-bold text-slate-800">Feb 27, 2026</h3>
+                            <h3 className="text-xl font-bold text-slate-800">{friend.nextDue}</h3>
                             <p className="text-slate-400 text-[10px] font-bold uppercase mt-1">Next Due</p>
                         </div>
                     </div>
 
-                    {/* Relationship Goal */}
                     <div className="bg-white p-8 rounded-xl border border-slate-100 shadow-sm relative">
                         <button className="absolute right-6 top-6 text-[10px] font-bold uppercase bg-slate-50 px-3 py-1 rounded border border-slate-200">Edit</button>
                         <h4 className="text-emerald-800 font-bold mb-4">Relationship Goal</h4>
                         <p className="text-slate-600 text-sm">Connect every <span className="font-bold">30 days</span></p>
                     </div>
 
-                    {/* Quick Check-In */}
+                    {/* Quick Check-In Section */}
                     <div className="bg-white p-8 rounded-xl border border-slate-100 shadow-sm">
                         <h4 className="text-emerald-800 font-bold mb-6">Quick Check-In</h4>
                         <div className="grid grid-cols-3 gap-4">
+                            {/* Call Button */}
                             <button 
-                                onClick={() => handleCall(friend.name)}
+                                onClick={() => handleAction('Call', friend.name)}
                                 className="flex flex-col items-center justify-center py-6 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-all border border-slate-100 group"
                             >
                                 <FiPhone size={24} className="mb-2 text-slate-700 group-hover:text-emerald-700" />
                                 <span className="text-xs font-bold text-slate-600">Call</span>
                             </button>
-                                                        <button className="flex flex-col items-center justify-center py-6 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all border border-slate-100">
-                                <FiMessageSquare size={24} className="mb-2 text-slate-700" />
+
+                            {/* Text Button */}
+                            <button 
+                                onClick={() => handleAction('Text', friend.name)}
+                                className="flex flex-col items-center justify-center py-6 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-all border border-slate-100 group"
+                            >
+                                <FiMessageSquare size={24} className="mb-2 text-slate-700 group-hover:text-emerald-700" />
                                 <span className="text-xs font-bold text-slate-600">Text</span>
                             </button>
-                            <button className="flex flex-col items-center justify-center py-6 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all border border-slate-100">
-                                <FiVideo size={24} className="mb-2 text-slate-700" />
+
+                            {/* Video Button */}
+                            <button 
+                                onClick={() => handleAction('Video', friend.name)}
+                                className="flex flex-col items-center justify-center py-6 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-all border border-slate-100 group"
+                            >
+                                <FiVideo size={24} className="mb-2 text-slate-700 group-hover:text-emerald-700" />
                                 <span className="text-xs font-bold text-slate-600">Video</span>
                             </button>
                         </div>

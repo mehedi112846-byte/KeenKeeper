@@ -7,12 +7,17 @@ import Books from '../pages/books/books';
 import { createBrowserRouter } from "react-router-dom";
 import Error from '../pages/ErrorPage/Error';
 import Details from '../pages/DetailsPage/Details';
+import Timeline from '../TimelineData/timeline';
 
 const Router = createBrowserRouter([
   {
   path:"/",
   element:<MainLayout/>,
   children:[
+    { index: true, element: <Hompage /> },
+    { path: "/details/:id", element: <Details /> },
+    { path: "/timeline", element: <Timeline /> },
+
     {
       index: true,
       element:<Hompage/>,
