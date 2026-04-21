@@ -5,20 +5,20 @@ import { useTimeline } from '../../Timeline/timelineContext';
 const Stats = () => {
     const { timelineData } = useTimeline();
 
-    // টাইমলাইন ডাটা থেকে টাইপ অনুযায়ী কাউন্ট বের করা
+    // finding count data from timeline 
     const dataCounts = timelineData.reduce((acc, curr) => {
         acc[curr.type] = (acc[curr.type] || 0) + 1;
         return acc;
     }, {});
 
-    // চার্টের জন্য ডাটা ফরম্যাট করা
+    // formating data for pi chart 
     const chartData = [
         { name: 'Call', value: dataCounts['Call'] || 0, color: '#244D3F' }, // Dark Green
         { name: 'Text', value: dataCounts['Text'] || 0, color: '#8B5CF6' }, // Purple
         { name: 'Video', value: dataCounts['Video'] || 0, color: '#10B981' }, // Emerald
     ];
 
-    // যদি কোন ডাটা না থাকে তার জন্য একটি চেক
+    // if no data 
     const hasData = timelineData.length > 0;
 
     return (
@@ -38,7 +38,7 @@ const Stats = () => {
                             <PieChart>
                                 <Pie
                                     data={chartData}
-                                    innerRadius={80}  // ডোনাট শেপ করার জন্য
+                                    innerRadius={80}
                                     outerRadius={120}
                                     paddingAngle={5}
                                     dataKey="value"

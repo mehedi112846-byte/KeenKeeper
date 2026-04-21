@@ -1,11 +1,11 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// ১. কনটেক্সট তৈরি
+// making context
 const FilterContext = createContext();
 
-// ২. প্রোভাইডার কম্পোনেন্ট
+// Provider component
 export const FilterProvider = ({ children }) => {
-    const [filter, setFilter] = useState('all'); // ডিফল্টভাবে সব ফ্রেন্ড দেখাবে
+    const [filter, setFilter] = useState('all'); //all friends will show by default
 
     return (
         <FilterContext.Provider value={{ filter, setFilter }}>
@@ -14,7 +14,7 @@ export const FilterProvider = ({ children }) => {
     );
 };
 
-// ৩. কাস্টম হুক (যাতে সহজে ব্যবহার করা যায়)
+// custom hook for using easily
 export const useFilter = () => {
     const context = useContext(FilterContext);
     if (!context) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTimeline } from '../Timeline/timelineContext'; // context er path check koro
+import { useTimeline } from '../Timeline/timelineContext';
 import { FiPhone, FiMessageSquare, FiVideo, FiUsers } from "react-icons/fi";
 
 const Timeline = () => {

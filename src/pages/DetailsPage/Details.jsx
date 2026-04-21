@@ -10,7 +10,7 @@ import { useTimeline } from '../../Timeline/timelineContext';
 
 const Details = () => {
     const { id } = useParams(); 
-    const { addActivity } = useTimeline(); // Context থেকে ফাংশনটি আনা হলো
+    const { addActivity } = useTimeline(); // taking the function from context
     const friend = friendsData.find(f => f.id === parseInt(id)); 
 
     if (!friend) {
@@ -26,12 +26,12 @@ const Details = () => {
         }
     };
 
-    // সব ধরনের অ্যাকশন (Call, Text, Video) হ্যান্ডেল করার ফাংশন
+    // for handling all functions like call, Video
     const handleAction = (type, friendName) => {
-        // টাইমলাইনে ডাটা অ্যাড করবে
+        // it will add data to timeline 
         addActivity(type, friendName);
         
-        // টোস্ট মেসেজ দেখাবে
+        // for showing toast message 
         toast.success(`${type} with ${friendName} logged!`, {
             position: "top-right",
             autoClose: 3000,
@@ -81,7 +81,7 @@ const Details = () => {
                     </div>
                 </div>
 
-                {/* --- Right Stats Section --- */}
+                {/* --- Right Status Section --- */}
                 <div className="md:col-span-8 space-y-6">
                     <div className="grid grid-cols-3 gap-4">
                         <div className="bg-white p-6 rounded-xl border border-slate-100 text-center shadow-sm">

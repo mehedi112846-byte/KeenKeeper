@@ -4,7 +4,7 @@ const TimelineContext = createContext();
 
 export const TimelineProvider = ({ children }) => {
   const [timelineData, setTimelineData] = useState([
-    // প্রাথমিক কিছু ডামি ডাটা (আপনার UI অনুযায়ী)
+    // some primary dumy data
     //{ id: 1, type: 'Meetup', name: 'Tom Baker', date: 'March 29, 2026' },
   ]);
 

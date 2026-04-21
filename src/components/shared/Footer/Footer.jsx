@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaYoutube, FaFacebook, FaXTwitter } from "react-icons/fa6"; // আইকনগুলোর জন্য react-icons ইন্সটল থাকতে হবে
+import { FaYoutube, FaFacebook, FaXTwitter } from "react-icons/fa6"; //for using react icons
 
 const Footer = () => {
     return (

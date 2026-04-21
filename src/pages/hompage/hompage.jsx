@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import friendsDataRaw from './friends.json'; // আপনার JSON ফাইলের পাথ ঠিক আছে কিনা দেখে নিন
-import { useFilter } from '../../context/filterContext'; // আপনার পাথ অনুযায়ী ঠিক করে নিন
+import friendsData from './friends.json';
+import { useFilter } from '../../context/filterContext';
 
 const Hompage = () => {
     const [friends, setFriends] = useState([]);
-    const { filter } = useFilter(); // কনটেক্সট থেকে ফিল্টার স্টেট নেওয়া হলো
+    const { filter } = useFilter();
 
     useEffect(() => {
-        // JSON ডাটা স্টেটে সেট করা হচ্ছে
-        setFriends(friendsDataRaw);
+        // dealing with json data 
+        setFriends(friendsData);
     }, []);
 
-    // ফিল্টারিং লজিক
+    // filtering logic
     const filteredFriends = friends.filter(friend => {
         if (filter === 'all') return true; 
         return friend.type === filter; 
     });
 
-    // ডাইনামিক স্ট্যাটাস কাউন্ট
+    // dynamic status count 
     const stats = [
         { label: "Total Friends", count: friends.length },
-        { label: "On Track", count: friends.filter(f => f.type === 'on-track').length },
-        { label: "Need Attention", count: friends.filter(f => f.type === 'overdue' || f.type === 'almost-due').length },
+        { label: "On Track", count: friends.filter(friends => friends.type === 'on-track').length },
+        { label: "Need Attention", count: friends.filter(friends => friends.type === 'overdue' || friends.type === 'almost-due').length },
         { label: "Interactions This Month", count: 12 }, 
     ];
 
-    // স্ট্যাটাস অনুযায়ী ডাইনামিক কালার ফাংশন
+    // dynamic color setting according to logic
     const getStatusStyles = (type) => {
         switch (type) {
             case 'overdue': return 'bg-red-500 text-white';
@@ -40,7 +40,7 @@ const Hompage = () => {
         <div className="min-h-screen bg-[#F9FBFC] py-12 px-6 font-sans">
             <div className="max-w-6xl mx-auto">
                 
-                {/* --- Header Section --- */}
+                {/* --- Top Title or header section --- */}
                 <header className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-[#1F2937] tracking-tight mb-4">
                         Friends to keep close in your life
@@ -53,7 +53,7 @@ const Hompage = () => {
                     </button>
                 </header>
 
-                {/* --- Stats Display Row --- */}
+                {/* --- card's status and count section --- */}
                 <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
                     {stats.map((item, index) => (
                         <div key={index} className="bg-white border border-slate-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
@@ -70,7 +70,7 @@ const Hompage = () => {
                     </div>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {/* মডিফাইড অংশ: filteredFriends.map ব্যবহার করা হয়েছে */}
+                        {/* modified part: filteredFriends.map has used here */}
                         {filteredFriends.map((friend) => (
                             <Link to={`/details/${friend.id}`} key={friend.id} className="block">
                                 <div className="bg-white rounded-2xl border border-slate-100 p-8 flex flex-col items-center shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer h-full">
@@ -85,7 +85,7 @@ const Hompage = () => {
                                         />
                                     </div>
 
-                                    {/* Person Details */}
+                                    {/* Person's Details */}
                                     <h4 className="text-xl font-bold text-slate-800">{friend.name}</h4>
                                     <span className="text-slate-400 text-xs mb-5">{friend.lastSeen}</span>
 
@@ -107,7 +107,7 @@ const Hompage = () => {
                         ))}
                     </div>
 
-                    {/* যদি কোনো ফ্রেন্ড খুঁজে না পাওয়া যায় */}
+                    {/* if didn't found dynamic friends */}
                     {filteredFriends.length === 0 && (
                         <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-slate-200">
                             <p className="text-slate-400 font-medium">No friends found in this category.</p>

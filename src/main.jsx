@@ -1,10 +1,10 @@
-import React, { StrictMode } from 'react'; // React ইমপোর্ট করা হলো যাতে 'ReferenceError' না আসে
+import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import Router from './Routers/Router';
 import { RouterProvider } from "react-router-dom";
 import { TimelineProvider } from './Timeline/timelineContext';
-import { FilterProvider } from './context/filterContext'; // ফিল্টার কনটেক্সট ইমপোর্ট করা হলো
+import { FilterProvider } from './context/filterContext';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
